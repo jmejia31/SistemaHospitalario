@@ -263,8 +263,8 @@ return [
             ],
         ],
         [
-            'text'        => 'Categorias',
-            'url'         => 'categorias',
+            'text'        => 'Inventario',
+            'url'         => 'inventario',
             'icon'        => 'fas fa-cubes',
         ],
         [
@@ -273,18 +273,27 @@ return [
             'icon'        => 'fas fa-cubes',
         ],
         [
-            'text'        => 'Categorias',
+            'text'    => 'Ventas',
+            'icon'    => 'fas fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Ver las ventas',
+                    'url'  => 'verventas',
+                ],
+                [
+                    'text' => 'Facturar',
+                    'url'  => 'fac',
+                ],
+            ],
+        ],
+        [
+            'text'        => 'Notas de Audio',
             'url'         => 'categorias',
             'icon'        => 'fas fa-cubes',
         ],
         [
-            'text'        => 'Categorias',
-            'url'         => 'categorias',
-            'icon'        => 'fas fa-cubes',
-        ],
-        [
-            'text'        => 'Categorias',
-            'url'         => 'categorias',
+            'text'        => 'Expedientes medicos',
+            'url'         => 'expedientes',
             'icon'        => 'fas fa-cubes',
         ],
 

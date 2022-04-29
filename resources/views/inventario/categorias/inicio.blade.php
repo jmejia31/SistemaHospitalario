@@ -21,7 +21,7 @@
                         <th></th>
                         <th></th>
                     </tr>
-                    @foreach ($categorias[0] as $categoria)
+                    @foreach ($categorias[1] as $categoria)
                         <tr>
                             <td>{{ $categoria->COD_CATEG }}</td>
                             <td>{{ $categoria->DESC_CATEGORIA }}</td>
@@ -31,7 +31,7 @@
                             </td>
                             <td>
                                 <a class="btn btn-primary"
-                                    href="{{ url('categorias/' . $categoria->COD_CATEG ) }}">Consultar</a>
+                                0href="{{ url('categorias/' . $categoria->COD_CATEG ) }}">Consultar</a>
                             </td>
                             <td>
                                 <form method="post" action="{{ url('categorias', $categoria->COD_CATEG) }}">

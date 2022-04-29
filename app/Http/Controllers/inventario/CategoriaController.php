@@ -11,8 +11,7 @@ class CategoriaController extends Controller
 {
     private $cliente;
 
-    public function __construct()
-    {
+    public function __construct () {
         $this->cliente = new Client(['base_uri' => 'http://localhost:4000/TBL_CATEG_PRODUCTOS/']);
     }
 
@@ -25,8 +24,11 @@ class CategoriaController extends Controller
     {
         $respuesta = $this->cliente->get('');
         $cuerpo = $respuesta->getBody();
-        return view('inventario.categorias.inicio', ['categorias' => json_decode($cuerpo)]); //llama la ruta de la vista
+        return view('Inventarios.crear', ['categs' => json_decode($cuerpo)]);
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -35,7 +37,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        return view('inventario.categorias.crear');
+        return view('Inventarios.crear');
     }
 
     /**
@@ -50,7 +52,7 @@ class CategoriaController extends Controller
             'json' => $request->all()
         ]);
 
-        return redirect("/categorias");
+        return redirect("/inventario");
     }
 
     /**
@@ -63,7 +65,7 @@ class CategoriaController extends Controller
     {
         $respuesta = $this->cliente->get($id);
         $cuerpo = $respuesta->getBody();
-        return view('inventario.categorias.ver', ['categorias' => json_decode($cuerpo)]);
+        return view('Inventarios.ver', ['categ' => json_decode($cuerpo)]);
     }
 
     /**
@@ -76,7 +78,7 @@ class CategoriaController extends Controller
     {
         $respuesta = $this->cliente->get($id);
         $cuerpo = $respuesta->getBody();
-        return view('inventario.categorias.editar', ['categorias' => json_decode($cuerpo)]);
+        return view('Inventarios.editar', ['categ' => json_decode($cuerpo)]);
     }
 
     /**
@@ -92,7 +94,7 @@ class CategoriaController extends Controller
             'json' => $request->all()
         ]);
 
-        return redirect("/categorias");
+        return redirect("/inventario");
     }
 
     /**
@@ -105,6 +107,6 @@ class CategoriaController extends Controller
     {
         $this->cliente->delete($id);
 
-        return redirect('/categorias');
+        return redirect('/inventario');
     }
 }

@@ -5,8 +5,17 @@ namespace App\Http\Controllers\Inventarios;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use GuzzleHttp\Client;
+use Symfony\Component\VarDumper\VarDumper;
+
+
 class InventariosController extends Controller
 {
+    private $cliente;
+
+        public function __construct () {
+        $this->cliente = new Client(['base_uri' => 'http://localhost:4000/TBL_PRODUCTOS/']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,9 @@ class InventariosController extends Controller
      */
     public function index()
     {
-        //
+        $respuesta = $this->cliente->get('');
+        $cuerpo = $respuesta->getBody();
+        return view('Inventarios.inicio', ['inventario' => json_decode($cuerpo)]);
     }
 
     /**
@@ -24,7 +35,7 @@ class InventariosController extends Controller
      */
     public function create()
     {
-        //
+        return view('Inventarios.crear');
     }
 
     /**
@@ -35,7 +46,11 @@ class InventariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->cliente->post('', [
+            'json' => $request->all()
+        ]);
+
+        return redirect("/inventario");
     }
 
     /**
@@ -46,7 +61,9 @@ class InventariosController extends Controller
      */
     public function show($id)
     {
-        //
+        $respuesta = $this->cliente->get($id);
+        $cuerpo = $respuesta->getBody();
+        return view('Inventarios.ver', ['inventario' => json_decode($cuerpo)]);
     }
 
     /**
@@ -54,10 +71,12 @@ class InventariosController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+     * */
     public function edit($id)
     {
-        //
+        $respuesta = $this->cliente->get($id);
+        $cuerpo = $respuesta->getBody();
+        return view('Inventarios.editar', ['inventario' => json_decode($cuerpo)]);
     }
 
     /**
@@ -69,7 +88,11 @@ class InventariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->cliente->put($id, [
+            'json' =>  $request->merge(['PI_COD_PRODUCTO' => $id])->all()
+        ]);
+
+        return redirect("/inventario");
     }
 
     /**
@@ -80,6 +103,8 @@ class InventariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->cliente->delete($id);
+
+        return redirect('/inventario');
     }
 }

@@ -5,8 +5,17 @@ namespace App\Http\Controllers\Seguridad\Permisos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use GuzzleHttp\Client;
+use Symfony\Component\VarDumper\VarDumper;
+
 class PermisosController extends Controller
 {
+    private $cliente;
+    public function __construct()
+    {
+        $this->cliente = new Client(['base_uri' => 'http://localhost:4000/tbl_permisos/']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,9 @@ class PermisosController extends Controller
      */
     public function index()
     {
-        //
+        $respuesta = $this->cliente->get('');
+        $cuerpo = $respuesta->getBody();
+        return view('Seguridad.Permisos.inicio', ['permisos' => json_decode($cuerpo)]);
     }
 
     /**
@@ -24,7 +35,7 @@ class PermisosController extends Controller
      */
     public function create()
     {
-        //
+        return view('Seguridad.Permisos.crear');
     }
 
     /**
@@ -35,8 +46,13 @@ class PermisosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->cliente->post('', [
+            'json' => $request->all()
+        ]);
+
+        return redirect("/permisos");
     }
+
 
     /**
      * Display the specified resource.
@@ -46,7 +62,9 @@ class PermisosController extends Controller
      */
     public function show($id)
     {
-        //
+        $respuesta = $this->cliente->get($id);
+        $cuerpo = $respuesta->getBody();
+        return view('Seguridad.Permisos.ver', ['permisos' => json_decode($cuerpo)]);
     }
 
     /**
@@ -57,7 +75,9 @@ class PermisosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $respuesta = $this->cliente->get($id);
+        $cuerpo = $respuesta->getBody();
+        return view('Seguridad.Permisos.editar', ['permisos' => json_decode($cuerpo)]);
     }
 
     /**
@@ -69,7 +89,13 @@ class PermisosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $this->cliente->put($id, [
+
+            'json' =>  $request->merge(['COD_PERMISO' => $id])->all()
+        ]);
+
+        return redirect("/permisos");
     }
 
     /**
@@ -80,6 +106,8 @@ class PermisosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->cliente->delete($id);
+
+        return redirect('/permisos');
     }
-}
+};

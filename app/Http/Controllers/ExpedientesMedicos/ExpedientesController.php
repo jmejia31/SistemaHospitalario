@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\ExpedientesMedicos;
 
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class ExpedientesController extends Controller
 {
+    private $cliente;
+
+    public function __construct () {
+        $this->cliente = new Client(['base_uri' => 'http://localhost:4000/TBL_EXPEDIENTE_MEDICO/']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,9 @@ class ExpedientesController extends Controller
      */
     public function index()
     {
-        //
+        $respuesta = $this->cliente->get('');
+        $cuerpo = $respuesta->getBody();
+        return view('ExpedientesMedicos.inicio', ['expedientes' => json_decode($cuerpo)]);
     }
 
     /**
@@ -24,7 +32,7 @@ class ExpedientesController extends Controller
      */
     public function create()
     {
-        //
+        return view('ExpedientesMedicos.crear');
     }
 
     /**
@@ -35,7 +43,11 @@ class ExpedientesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->cliente->post('', [
+            'json' => $request->all()
+        ]);
+
+        return redirect("/expedientes");
     }
 
     /**
@@ -46,7 +58,9 @@ class ExpedientesController extends Controller
      */
     public function show($id)
     {
-        //
+        $respuesta = $this->cliente->get($id);
+        $cuerpo = $respuesta->getBody();
+        return view('ExpedientesMedicos.ver', ['expedientes' => json_decode($cuerpo)]);
     }
 
     /**
@@ -57,7 +71,9 @@ class ExpedientesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $respuesta = $this->cliente->get($id);
+        $cuerpo = $respuesta->getBody();
+        return view('ExpedientesMedicos.editar', ['expedientes' => json_decode($cuerpo)]);
     }
 
     /**
@@ -69,7 +85,11 @@ class ExpedientesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->cliente->put($id, [
+            'json' =>  $request->merge(['PI_COD_EXPEDIENTE' => $id])->all()
+        ]);
+
+        return redirect("/expedientes");
     }
 
     /**
@@ -80,6 +100,8 @@ class ExpedientesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->cliente->delete($id);
+
+        return redirect('/expedientes');
     }
 }

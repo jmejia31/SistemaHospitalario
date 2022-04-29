@@ -6,40 +6,73 @@
     <h1>Dashboard</h1>
 @stop
 
+<style>
+    table th {
+        text-align: center;
+    }
+
+    table tr {
+        text-align: center;
+    }
+
+    table tr:nth-child(4) {
+        text-align: center;
+    }
+
+</style>
+
 @section('content')
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <a class="btn btn-success" href="{{ url('categorias/create') }}">Crear</a>
+                <a class="btn btn-success" href="{{ url('permisos/create') }}">Crear</a>
             </div>
             <div class="card-body">
                 <table id="registros" class="table table-bordered table-hover dataTable dtr-inline">
                     <tr>
                         <th>#</th>
-                        <th>Nombre de la categoria</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>Codigo de Rol</th>
+                        <th>Eliminar</th>
+                        <th>Editar</th>
+                        <th>Ingresar</th>
+                        <th>Consultar</th>
+                        <th>Acciones</th>
                     </tr>
-                    @foreach ($categorias[0] as $categoria)
+                    @foreach ($permisos[0] as $permiso)
                         <tr>
-                            <td>{{ $categoria->COD_CATEG }}</td>
-                            <td>{{ $categoria->DESC_CATEGORIA }}</td>
-                            <td>
-                                <a class="btn btn-warning"
-                                    href="{{ url('categorias/' . $categoria->COD_CATEG . '/edit') }}">Editar</a>
-                            </td>
-                            <td>
-                                <a class="btn btn-primary"
-                                    href="{{ url('categorias/' . $categoria->COD_CATEG ) }}">Consultar</a>
-                            </td>
-                            <td>
-                                <form method="post" action="{{ url('categorias', $categoria->COD_CATEG) }}">
-                                    @csrf()
-                                    @method('DELETE')
-                                    <input class="btn btn-danger" type="submit" value="Eliminar" />
-                                </form>
-                            </td>
+                            <td>{{ $permiso->COD_PERMISO }}</td>
+                            <td>{{ $permiso->COD_ROL_USR }}</td>
+                            <td>{{ $permiso->ELIMINAR }}</td>
+                            <td>{{ $permiso->EDITAR }}</td>
+                            <td>{{ $permiso->INGRESAR }}</td>
+                            <td>{{ $permiso->CONSULTAR }}</td>
+
+                            <div style="text-align: center">
+
+                                <td>
+
+                                    <div class="btn-group btn-group-justified">
+                                        <div class="mr-2">
+                                            <a class="btn btn-warning"
+                                                href="{{ url('permisos/' . $permiso->COD_PERMISO . '/edit') }}">Editar</a>
+                                        </div>
+
+                                        <div class="mr-2">
+                                            <a class="btn btn-primary"
+                                                href="{{ url('permisos/' . $permiso->COD_PERMISO) }}">Consultar</a>
+                                        </div>
+
+                                        <form method="post" action="{{ url('permisos', $permiso->COD_PERMISO) }}">
+                                            @csrf()
+                                            @method('DELETE')
+                                            <input class="btn btn-danger" type="submit" value="Eliminar" />
+                                        </form>
+
+                                    </div>
+                                </td>
+                            </div>
+
+
                         </tr>
                     @endforeach
                 </table>

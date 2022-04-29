@@ -19,6 +19,7 @@
                             <input type="text" class="form-control" value="{{ $categoria->COD_CATEG }}"
                                 name="PI_COD_CATEGORIA" disabled required>
                         </div>
+
                         <div class="form-group">
                             <label class="text-danger"> * Nombre de la categoria</label>
                             <input type="text" class="form-control" value="{{ $categoria->DESC_CATEGORIA }}"
@@ -28,7 +29,7 @@
                 </div>
                 <div class="card-footer">
                     <input class="btn btn-primary" type="submit" value="Actualizar" />
-                    <a class="btn btn-dark" href="{{ url('categorias') }}">Regresar</a>
+                    <a class="btn btn-dark" href="{{url('categorias')}}">Regresar</a>
                 </div>
             </div>
         @endforeach

@@ -80,6 +80,7 @@ class CitasController extends Controller
         return view('CitasMedicas.editar', ['citas' => json_decode($cuerpo)]);
     }
 
+
     /**
      * Update the specified resource in storage.
      *

@@ -26,6 +26,8 @@
         <div class="card">
             <div class="card-header">
                 <a class="btn btn-success" href="{{ url('citas/create') }}">Crear</a>
+                <a class="btn btn-success" href="{{ url('permisos') }}">Permisos</a>
+                <a class="btn btn-success" href="{{ url('roles') }}">Roles</a>
             </div>
             <div class="card-body">
                 <table id="registros" class="table table-bordered table-hover dataTable dtr-inline">
@@ -55,7 +57,7 @@
 
                             <td>
 
-                                <div class="d-flex justify-content-between">
+                                <div class="btn-group btn-group-justified">
                                     <div class="mr-2">
                                         <a class="btn btn-warning"
                                             href="{{ url('citas/' . $cita->COD_CITA . '/edit') }}">Editar</a>

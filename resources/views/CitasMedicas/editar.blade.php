@@ -15,6 +15,7 @@
                     <form action="{{ url('citas', $cita->COD_CITA) }}" method="post">
                         @csrf()
                         @method('PUT')
+
                 </div>
             </div>
 

@@ -3,38 +3,41 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1> HOME </h1>
 @stop
 
 @section('content')
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <a class="btn btn-success" href="{{ url('categorias/create') }}">Crear</a>
+                <a class="btn btn-success"  href="{{ url('Audios/create') }}">Agregar Audio </a>
             </div>
             <div class="card-body">
                 <table id="registros" class="table table-bordered table-hover dataTable dtr-inline">
                     <tr>
-                        <th>#</th>
-                        <th>Nombre de la categoria</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th poss>Codigo Expediente</th>
+                        <th> NOMBRE </th>
+                        <th> APELLIDO </th>
+                        <th>Nota de Audio</th>
+                        <th> Registrado por </th>
                     </tr>
-                    @foreach ($categorias[0] as $categoria)
+                    @foreach ($Audios[0] as $Audio)
                         <tr>
-                            <td>{{ $categoria->COD_CATEG }}</td>
-                            <td>{{ $categoria->DESC_CATEGORIA }}</td>
+                            <td>{{ $Audio->COD_EXPEDIENTE}}</td>
+                            <td>{{ $Audio->PRIMER_NOMBRE}}</td>
+                            <td>{{ $Audio->PRIMER_APELLIDO}}</td>
+                            <td>{{ $Audio->AUDIO_PACIENTE}}</td>
+                            <td>{{ $Audio->USR_REGISTRO}}</td>
                             <td>
                                 <a class="btn btn-warning"
-                                    href="{{ url('categorias/' . $categoria->COD_CATEG . '/edit') }}">Editar</a>
+                                    href="{{ url('Audios/' . $Audio->COD_NOTAS_AUDIO . '/edit') }}">Editar</a>
                             </td>
                             <td>
                                 <a class="btn btn-primary"
-                                    href="{{ url('categorias/' . $categoria->COD_CATEG ) }}">Consultar</a>
+                                    href="{{ url('Audios/' . $Audio->COD_NOTAS_AUDIO ) }}">Consultar</a>
                             </td>
                             <td>
-                                <form method="post" action="{{ url('categorias', $categoria->COD_CATEG) }}">
+                                <form method="post" action="{{ url('Audios', $Audio->COD_NOTAS_AUDIO) }}">
                                     @csrf()
                                     @method('DELETE')
                                     <input class="btn btn-danger" type="submit" value="Eliminar" />

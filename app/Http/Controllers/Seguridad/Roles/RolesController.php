@@ -5,8 +5,18 @@ namespace App\Http\Controllers\Seguridad\Roles;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use GuzzleHttp\Client;
+use Symfony\Component\VarDumper\VarDumper;
+
 class RolesController extends Controller
 {
+    private $cliente;
+
+    public function __construct()
+    {
+        $this->cliente = new Client(['base_uri' => 'http://localhost:4000/tbl_roles_usuarios/']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,9 @@ class RolesController extends Controller
      */
     public function index()
     {
-        //
+        $respuesta = $this->cliente->get('');
+        $cuerpo = $respuesta->getBody();
+        return view('Seguridad.Roles.inicio', ['roles' => json_decode($cuerpo)]);
     }
 
     /**
@@ -24,7 +36,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        //
+        return view('Seguridad.Roles.crear');
     }
 
     /**
@@ -35,7 +47,11 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->cliente->post('', [
+            'json' => $request->all()
+        ]);
+
+        return redirect("/roles");
     }
 
     /**
@@ -46,7 +62,9 @@ class RolesController extends Controller
      */
     public function show($id)
     {
-        //
+        $respuesta = $this->cliente->get($id);
+        $cuerpo = $respuesta->getBody();
+        return view('Seguridad.Roles.ver', ['roles' => json_decode($cuerpo)]);
     }
 
     /**
@@ -57,7 +75,9 @@ class RolesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $respuesta = $this->cliente->get($id);
+        $cuerpo = $respuesta->getBody();
+        return view('Seguridad.Roles.editar', ['roles' => json_decode($cuerpo)]);
     }
 
     /**
@@ -69,7 +89,12 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $this->cliente->put($id, [
+            'json' =>  $request->merge(['COD_ROL_USR' => $id])->all()
+        ]);
+
+        return redirect("/roles");
     }
 
     /**
@@ -80,6 +105,8 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->cliente->delete($id);
+
+        return redirect('/roles');
     }
-}
+};

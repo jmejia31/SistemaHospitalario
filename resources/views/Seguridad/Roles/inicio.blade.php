@@ -6,35 +6,46 @@
     <h1>Dashboard</h1>
 @stop
 
+<style>
+    table th {
+        text-align: center;
+    }
+
+    table tr {
+        text-align: center;
+    }
+
+    table tr:nth-child(4) {
+        text-align: center;
+    }
+
+</style>
+
 @section('content')
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <a class="btn btn-success" href="{{ url('categorias/create') }}">Crear</a>
+                <a class="btn btn-success" href="{{ url('roles/create') }}">Crear</a>
             </div>
             <div class="card-body">
                 <table id="registros" class="table table-bordered table-hover dataTable dtr-inline">
                     <tr>
-                        <th>#</th>
-                        <th>Nombre de la categoria</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>Codigo Rol</th>
+                        <th>Rol</th>
                     </tr>
-                    @foreach ($categorias[0] as $categoria)
+                    @foreach ($roles[0] as $rol)
                         <tr>
-                            <td>{{ $categoria->COD_CATEG }}</td>
-                            <td>{{ $categoria->DESC_CATEGORIA }}</td>
+                            <td>{{ $rol->COD_ROL_USR }}</td>
+                            <td>{{ $rol->ROL }}</td>
                             <td>
                                 <a class="btn btn-warning"
-                                    href="{{ url('categorias/' . $categoria->COD_CATEG . '/edit') }}">Editar</a>
+                                    href="{{ url('roles/' . $rol->COD_ROL_USR . '/edit') }}">Editar</a>
                             </td>
                             <td>
-                                <a class="btn btn-primary"
-                                    href="{{ url('categorias/' . $categoria->COD_CATEG ) }}">Consultar</a>
+                                <a class="btn btn-primary" href="{{ url('roles/' . $rol->COD_ROL_USR) }}">Consultar</a>
                             </td>
                             <td>
-                                <form method="post" action="{{ url('categorias', $categoria->COD_CATEG) }}">
+                                <form method="post" action="{{ url('roles', $rol->COD_ROL_USR) }}">
                                     @csrf()
                                     @method('DELETE')
                                     <input class="btn btn-danger" type="submit" value="Eliminar" />
